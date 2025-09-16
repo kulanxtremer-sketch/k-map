@@ -63,18 +63,19 @@
   <table id="kmap"></table>
 
   <script>
+    // K-map numbers with CD on rows, AB on columns
     const kmapOrder = [
-      [0, 1, 3, 2],
-      [4, 5, 7, 6],
-      [12, 13, 15, 14],
-      [8, 9, 11, 10]
+      [0, 4, 12, 8],
+      [1, 5, 13, 9],
+      [3, 7, 15, 11],
+      [2, 6, 14, 10]
     ];
 
     function generateKmap() {
       let input = document.getElementById("minterms").value;
       let minterms = input.split(",").map(n => parseInt(n.trim())).filter(n => !isNaN(n));
 
-      let table = "<tr><th>AB\\CD</th><th>00</th><th>01</th><th>11</th><th>10</th></tr>";
+      let table = "<tr><th>CD\\AB</th><th>00</th><th>01</th><th>11</th><th>10</th></tr>";
 
       let rowLabels = ["00","01","11","10"];
       for (let r = 0; r < 4; r++) {
@@ -93,3 +94,4 @@
 
 </body>
 </html>
+
