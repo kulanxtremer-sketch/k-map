@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>4-Variable K-Map Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+    h1 {
+      color: #333;
+    }
+    input {
+      padding: 8px;
+      width: 250px;
+      border: 1px solid #aaa;
+      border-radius: 6px;
+      margin-right: 10px;
+    }
+    button {
+      padding: 8px 15px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    table {
+      margin-top: 20px;
+      border-collapse: collapse;
+    }
+    td, th {
+      border: 1px solid #333;
+      padding: 15px;
+      text-align: center;
+      font-size: 18px;
+      width: 60px;
+      height: 60px;
+    }
+    th {
+      background: #ddd;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>4-Variable K-Map Generator</h1>
+  <p>Enter minterms (0–15) separated by commas:</p>
+  <div>
+    <input type="text" id="minterms" placeholder="e.g. 1,5,7,12">
+    <button onclick="generateKmap()">Generate</button>
+  </div>
+
+  <table id="kmap"></table>
+
+  <script>
+    const kmapOrder = [
+      [0, 1, 3, 2],
+      [4, 5, 7, 6],
+      [12, 13, 15, 14],
+      [8, 9, 11, 10]
+    ];
+
+    function generateKmap() {
+      let input = document.getElementById("minterms").value;
+      let minterms = input.split(",").map(n => parseInt(n.trim())).filter(n => !isNaN(n));
+
+      let table = "<tr><th>AB\\CD</th><th>00</th><th>01</th><th>11</th><th>10</th></tr>";
+
+      let rowLabels = ["00","01","11","10"];
+      for (let r = 0; r < 4; r++) {
+        table += `<tr><th>${rowLabels[r]}</th>`;
+        for (let c = 0; c < 4; c++) {
+          let num = kmapOrder[r][c];
+          let value = minterms.includes(num) ? 1 : 0;
+          table += `<td>${value}<br><small>(${num})</small></td>`;
+        }
+        table += "</tr>";
+      }
+
+      document.getElementById("kmap").innerHTML = table;
+    }
+  </script>
+
+</body>
+</html>
